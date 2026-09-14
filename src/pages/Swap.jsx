@@ -81,7 +81,7 @@ export default function Swap() {
 
   if (status === "empty" && !localStorage.getItem(STORAGE_KEY)) {
     return (
-      <section className="screen" id="screen-empty">
+      <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-empty">
         <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
           Not logged in.
         </h1>
@@ -94,7 +94,7 @@ export default function Swap() {
 
   if (status === "error") {
     return (
-      <section className="screen" id="screen-empty">
+      <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-empty">
         <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
           Error loading swap data.
         </h1>
@@ -105,7 +105,7 @@ export default function Swap() {
 
   if (status === "empty") {
     return (
-      <section className="screen" id="screen-empty">
+      <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-empty">
         <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
           No draft on file.
         </h1>

@@ -52,7 +52,7 @@ export default function Profile() {
 
   if (screen === "board" && board) {
     return (
-      <section className="screen" id="screen-board">
+      <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-board">
         <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
           <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>
           <Badge variant="outline">{board.employee.skill || ""}</Badge>
@@ -72,7 +72,7 @@ export default function Profile() {
   }
 
   return (
-    <section className="screen" id="screen-setup">
+    <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-setup">
       <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
         Set up your profile.
       </h1>

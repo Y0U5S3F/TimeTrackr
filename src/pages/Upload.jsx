@@ -110,7 +110,7 @@ export default function Upload() {
       </header>
 
       <main className="wrap flex-1 relative z-10 pt-16 pb-20 sm:pt-[clamp(64px,16vh,148px)]">
-        <section className="screen">
+        <section className="screen flex min-h-[60vh] flex-col justify-center">
           <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
             Upload a schedule.
           </h1>
