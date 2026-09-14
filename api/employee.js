@@ -1,5 +1,5 @@
-const store = require('../../lib/store');
-const { dayNameFromKey } = require('../../lib/parser');
+const store = require('../lib/store');
+const { dayNameFromKey } = require('../lib/parser');
 
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
@@ -7,9 +7,17 @@ module.exports = async (req, res) => {
     return;
   }
 
+  res.setHeader('Cache-Control', 'no-store');
+
+  const id = req.query.id;
+  if (!id) {
+    res.status(400).json({ error: 'Missing id' });
+    return;
+  }
+
   try {
     const state = await store.load();
-    const emp = state.employees[req.query.id];
+    const emp = state.employees[id];
     if (!emp) {
       res.status(404).json({ error: 'Not found' });
       return;

@@ -5,6 +5,7 @@ import BoardRows from "@/components/BoardRows";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/date";
+import { fetchJson } from "@/lib/api";
 
 const STORAGE_KEY = "esc_ra_employee_id";
 
@@ -38,9 +39,7 @@ export default function Swap() {
         return;
       }
       try {
-        const res = await fetch(`/api/swap-candidates?empId=${encodeURIComponent(currentEmpId)}`);
-        if (!res.ok) throw new Error(`API returned ${res.status}`);
-        const d = await res.json();
+        const d = await fetchJson(`/api/swap-candidates?empId=${encodeURIComponent(currentEmpId)}`);
         setData(d);
         if (!d.draftDates || d.draftDates.length === 0) {
           setStatus("empty");

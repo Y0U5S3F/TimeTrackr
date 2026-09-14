@@ -3,13 +3,13 @@ import SearchBox from "@/components/SearchBox";
 import BoardRows from "@/components/BoardRows";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { fetchJson } from "@/lib/api";
 
 const STORAGE_KEY = "esc_ra_employee_id";
 
 async function fetchSearch(q) {
   try {
-    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-    return await res.json();
+    return await fetchJson(`/api/search?q=${encodeURIComponent(q)}`);
   } catch {
     return [];
   }
@@ -21,9 +21,7 @@ export default function Profile() {
 
   async function loadSavedProfile(id) {
     try {
-      const res = await fetch(`/api/employee/${encodeURIComponent(id)}`);
-      if (!res.ok) throw new Error("not found");
-      const data = await res.json();
+      const data = await fetchJson(`/api/employee?id=${encodeURIComponent(id)}`);
       setBoard(data);
       setScreen("board");
     } catch {

@@ -5,6 +5,7 @@ import BoardRows from "@/components/BoardRows";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatDate, timeAgo } from "@/lib/date";
+import { fetchJson } from "@/lib/api";
 
 function useClock() {
   const [text, setText] = useState("");
@@ -29,9 +30,7 @@ function useClock() {
 
 async function fetchSearch(q) {
   try {
-    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-    if (!res.ok) return [];
-    return await res.json();
+    return await fetchJson(`/api/search?q=${encodeURIComponent(q)}`);
   } catch {
     return [];
   }
@@ -49,8 +48,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("/api/stats");
-        const s = await res.json();
+        const s = await fetchJson("/api/stats");
         if (!s || !s.employeeCount) return;
         setStats(s);
       } catch {
@@ -76,9 +74,7 @@ export default function Home() {
 
     (async () => {
       try {
-        const res = await fetch(`/api/employee/${encodeURIComponent(id)}`);
-        if (!res.ok) throw new Error("We couldn't find a schedule for that person.");
-        const data = await res.json();
+        const data = await fetchJson(`/api/employee?id=${encodeURIComponent(id)}`);
         if (cancelled) return;
         setBoard(data);
         window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
@@ -136,7 +132,7 @@ export default function Home() {
   }
 
   return (
-    <section className="screen flex flex-col items-center text-center" id="screen-home">
+    <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-home">
       <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
         Find your shifts.
       </h1>
@@ -146,11 +142,12 @@ export default function Home() {
       <div className="w-full max-w-[420px]">
         <SearchBox placeholder="Start typing a name…" fetchResults={fetchSearch} onSelect={selectEmployee} />
       </div>
+
       {error && <p className="mt-3 text-xs text-[var(--destructive-fg)]">{error}</p>}
       <p className="mt-2.5 text-xs text-[var(--text-faint)]">Schedules update whenever a new file is uploaded.</p>
 
       {stats && (
-        <div className="mt-10 flex flex-wrap items-baseline justify-center gap-3 text-[13px]">
+        <div className="mt-10 flex flex-wrap items-baseline gap-3 text-[13px]">
           <div className="inline-flex items-baseline gap-1.5">
             <span className="font-medium text-primary">{stats.employeeCount}</span>
             <span className="text-[var(--text-faint)]">people tracked</span>
@@ -170,7 +167,7 @@ export default function Home() {
         </div>
       )}
 
-      <div className="mt-5 flex flex-wrap justify-center gap-5 text-xs text-muted-foreground">
+      <div className="mt-5 flex flex-wrap gap-5 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-2">
           <i className="inline-block h-[9px] w-[9px] bg-primary" />
           Working shift
