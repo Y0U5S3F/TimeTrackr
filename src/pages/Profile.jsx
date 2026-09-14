@@ -53,9 +53,32 @@ export default function Profile() {
   if (screen === "board" && board) {
     return (
       <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-board">
-        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>
-          <Badge variant="outline">{board.employee.skill || ""}</Badge>
+        <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+          <div className="flex flex-wrap items-baseline gap-2">
+            <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>
+            <Badge variant="outline">{board.employee.skill || ""}</Badge>
+          </div>
+
+          <Button
+            variant="outline"
+            className="gap-2 font-mono text-[12px] uppercase tracking-[0.06em] text-[var(--destructive-fg)] transition-colors hover:border-[var(--destructive-fg)] hover:bg-[var(--destructive-fg)] hover:text-white"
+            onClick={logout}
+          >
+            <svg
+              className="h-[14px] w-[14px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Log out
+          </Button>
         </div>
 
         {board.days.length === 0 ? (
@@ -63,10 +86,6 @@ export default function Profile() {
         ) : (
           <BoardRows days={board.days} />
         )}
-
-        <Button variant="link" className="mt-6 font-mono text-[13px] text-[var(--text-faint)] hover:text-muted-foreground" onClick={logout}>
-          Log out (forget me on this device)
-        </Button>
       </section>
     );
   }

@@ -139,7 +139,7 @@ export default function Home() {
       <span className="text-xs tracking-[0.05em] text-[var(--text-faint)]">{clock}</span>
       <p className="mt-2.5 mb-8 font-mono text-sm text-muted-foreground">Type your name to see when you&rsquo;re on.</p>
 
-      <div className="w-full max-w-[420px]">
+      <div className="w-full">
         <SearchBox placeholder="Start typing a name…" fetchResults={fetchSearch} onSelect={selectEmployee} />
       </div>
 

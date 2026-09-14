@@ -58,7 +58,7 @@ export default function Nav() {
               end={l.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "inline-flex items-center gap-1.5 px-3.5 py-2 font-mono text-[13px] uppercase tracking-[0.08em] no-underline transition-colors duration-100",
+                  "inline-flex items-center gap-1.5 px-3.5 py-2 font-mono text-[13px] uppercase tracking-[0.08em] no-underline transition-all duration-150 hover:-translate-y-[1px] hover:bg-[var(--topbar-hover,rgba(255,255,255,0.06))]",
                   isActive ? "text-primary" : "hover:text-[var(--topbar-text)]"
                 )
               }
@@ -67,7 +67,10 @@ export default function Nav() {
               {({ isActive }) => (
                 <>
                   <span
-                    className={cn("inline-block h-[7px] w-[7px]", isActive ? "bg-primary" : "bg-transparent")}
+                    className={cn(
+                      "inline-block h-[7px] w-[7px] transition-transform duration-150 group-hover:scale-125",
+                      isActive ? "bg-primary" : "bg-transparent"
+                    )}
                   />
                   {l.label}
                 </>
@@ -121,7 +124,7 @@ export default function Nav() {
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
               cn(
-                "wrap-wide flex items-center gap-2 border-b py-3.5 font-mono text-sm uppercase tracking-[0.08em] no-underline",
+                "wrap-wide flex items-center gap-2 border-b py-4 font-mono text-lg uppercase tracking-[0.08em] no-underline transition-all duration-150 active:pl-1.5 hover:pl-1.5 hover:bg-[var(--topbar-hover,rgba(255,255,255,0.06))]",
                 isActive ? "text-primary" : ""
               )
             }

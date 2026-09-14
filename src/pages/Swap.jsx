@@ -77,7 +77,13 @@ export default function Swap() {
       .slice(0, 20);
   }
 
-  if (status === "loading") return null;
+  if (status === "loading") {
+    return (
+      <section className="screen flex flex-col items-center py-16 text-center" id="screen-loading">
+        <p className="font-mono text-sm text-muted-foreground">Loading swap options…</p>
+      </section>
+    );
+  }
 
   if (status === "empty" && !localStorage.getItem(STORAGE_KEY)) {
     return (
