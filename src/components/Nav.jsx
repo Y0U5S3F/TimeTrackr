@@ -112,7 +112,7 @@ export default function Nav() {
       <nav
         className={cn(
           "flex flex-col overflow-hidden border-t sm:hidden",
-          open ? "max-h-[280px]" : "max-h-0 border-t-0"
+          open ? "max-h-[360px]" : "max-h-0 border-t-0"
         )}
         style={{ background: "var(--topbar)", borderColor: "var(--topbar-hairline)", transition: "max-height 0.25s ease" }}
       >
@@ -124,7 +124,7 @@ export default function Nav() {
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
               cn(
-                "wrap-wide flex items-center gap-2 border-b py-4 font-mono text-lg uppercase tracking-[0.08em] no-underline transition-all duration-150 active:pl-1.5 hover:pl-1.5 hover:bg-[var(--topbar-hover,rgba(255,255,255,0.06))]",
+                "wrap-wide flex items-center gap-2 border-b py-6 font-mono text-lg uppercase tracking-[0.08em] no-underline transition-all duration-150 active:pl-1.5 hover:pl-1.5 hover:bg-[var(--topbar-hover,rgba(255,255,255,0.06))]",
                 isActive ? "text-primary" : ""
               )
             }

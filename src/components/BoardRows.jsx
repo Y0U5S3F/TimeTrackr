@@ -70,6 +70,7 @@ export default function BoardRows({ days, highlightTodayTomorrow = true, stagger
         return (
           <div
             key={day.date ?? i}
+            id={day.date ? `day-${day.date}` : undefined}
             className={cn(
               "grid grid-cols-[110px_4px_1fr] items-center overflow-hidden rounded-[var(--radius)] border border-border bg-card [animation:flapIn_0.4s_ease_backwards] max-[480px]:grid-cols-[88px_4px_1fr]",
               rowStateClasses

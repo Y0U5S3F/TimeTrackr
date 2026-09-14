@@ -4,6 +4,7 @@ import BoardRows from "@/components/BoardRows";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { fetchJson } from "@/lib/api";
+import { localDateKey } from "@/lib/date";
 
 const STORAGE_KEY = "esc_ra_employee_id";
 
@@ -36,6 +37,16 @@ export default function Profile() {
     else setScreen("setup");
   }, []);
 
+  // Days are listed oldest-first, so jump straight to today's row once the
+  // board renders instead of leaving the reader to scroll past history.
+  useEffect(() => {
+    if (screen !== "board" || !board) return;
+    const todayEl = document.getElementById(`day-${localDateKey(new Date())}`);
+    if (todayEl) {
+      todayEl.scrollIntoView({ behavior: "instant" in window ? "instant" : "auto", block: "center" });
+    }
+  }, [screen, board]);
+
   function saveAndLoad(id) {
     localStorage.setItem(STORAGE_KEY, id);
     setScreen("loading");
@@ -52,7 +63,7 @@ export default function Profile() {
 
   if (screen === "board" && board) {
     return (
-      <section className="screen flex min-h-[60vh] flex-col justify-center" id="screen-board">
+      <section className="screen" id="screen-board">
         <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
           <div className="flex flex-wrap items-baseline gap-2">
             <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>

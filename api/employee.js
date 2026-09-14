@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
     const days = Object.keys(state.schedule)
       .filter((dateKey) => state.schedule[dateKey][emp.id])
-      .sort((a, b) => b.localeCompare(a))
+      .sort((a, b) => a.localeCompare(b))
       .map((dateKey) => ({
         date: dateKey,
         dayName: dayNameFromKey(dateKey),

@@ -4,7 +4,7 @@ import SearchBox from "@/components/SearchBox";
 import BoardRows from "@/components/BoardRows";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatDate, timeAgo } from "@/lib/date";
+import { formatDate, timeAgo, localDateKey } from "@/lib/date";
 import { fetchJson } from "@/lib/api";
 
 function useClock() {
@@ -77,7 +77,6 @@ export default function Home() {
         const data = await fetchJson(`/api/employee?id=${encodeURIComponent(id)}`);
         if (cancelled) return;
         setBoard(data);
-        window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
       } catch (err) {
         if (cancelled) return;
         setBoard(null);
@@ -91,6 +90,20 @@ export default function Home() {
       cancelled = true;
     };
   }, [searchParams]);
+
+  // Days are listed oldest-first, so jump straight to today's row once the
+  // board renders instead of leaving the reader to scroll past history —
+  // falling back to the top of the board if today isn't in range.
+  useEffect(() => {
+    if (!board) return;
+    const behavior = "instant" in window ? "instant" : "auto";
+    const todayEl = document.getElementById(`day-${localDateKey(new Date())}`);
+    if (todayEl) {
+      todayEl.scrollIntoView({ behavior, block: "center" });
+    } else {
+      window.scrollTo({ top: 0, behavior });
+    }
+  }, [board]);
 
   function selectEmployee(id) {
     setSearchParams({ employee: id });
