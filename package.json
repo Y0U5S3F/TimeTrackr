@@ -2,7 +2,6 @@
   "name": "roster",
   "version": "2.0.0",
   "private": true,
-  "type": "module",
   "description": "Upload a shift schedule spreadsheet, everyone searches their name to see when they work.",
   "engines": {
     "node": ">=18"

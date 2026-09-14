@@ -63,7 +63,16 @@ export default function Upload() {
         },
         body: JSON.stringify({ filename: file.name, fileBase64, mode }),
       });
-      const data = await res.json();
+
+      const raw = await res.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(
+          `Server error (${res.status}). Check the Vercel function logs for /api/upload.`
+        );
+      }
 
       if (!res.ok) throw new Error(data.error || "Upload failed");
 
