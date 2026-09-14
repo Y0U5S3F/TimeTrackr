@@ -1,7 +1,7 @@
 From 0c8024730b3161f3ce441c71cc8389377da6b223 Mon Sep 17 00:00:00 2001
 From: Claude <claude@anthropic.local>
 Date: Mon, 14 Sep 2026 19:56:40 +0000
-Subject: [PATCH] Fix swap layout, profile heading spacing, and link-button
+Subject: [PATCH 1/2] Fix swap layout, profile heading spacing, and link-button
  sizing bug
 
 ---
@@ -163,6 +163,53 @@ index 7cb831c..a2ac2b9 100644
        </section>
      );
    }
+-- 
+2.43.0
+
+From f4150528adc46de46af84dd7efbf089212eca5ee Mon Sep 17 00:00:00 2001
+From: Claude <claude@anthropic.local>
+Date: Mon, 14 Sep 2026 20:02:23 +0000
+Subject: [PATCH 2/2] Cap SearchBox dropdown height so long result lists don't
+ swallow the footer
+
+---
+ src/components/SearchBox.jsx | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/src/components/SearchBox.jsx b/src/components/SearchBox.jsx
+index fd18d66..58edb6e 100644
+--- a/src/components/SearchBox.jsx
++++ b/src/components/SearchBox.jsx
+@@ -13,6 +13,13 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
+   const [activeIndex, setActiveIndex] = useState(-1);
+   const debounceRef = useRef(null);
+   const wrapRef = useRef(null);
++  const itemRefs = useRef([]);
++
++  useEffect(() => {
++    if (activeIndex >= 0) {
++      itemRefs.current[activeIndex]?.scrollIntoView({ block: "nearest" });
++    }
++  }, [activeIndex]);
+ 
+   useEffect(() => {
+     function onPointerDown(e) {
+@@ -91,13 +98,14 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
+       </div>
+ 
+       {open && (
+-        <div className="absolute left-0 right-0 top-[calc(100%+2px)] z-10 overflow-hidden border border-neutral-200 bg-white shadow-lg">
++        <div className="absolute left-0 right-0 top-[calc(100%+2px)] z-10 max-h-[320px] overflow-y-auto overscroll-contain border border-neutral-200 bg-white shadow-lg">
+           {results.length === 0 ? (
+             <div className="p-4 text-center text-[13px] text-neutral-500">No one matches that name yet</div>
+           ) : (
+             results.map((emp, i) => (
+               <div
+                 key={emp.id}
++                ref={(el) => (itemRefs.current[i] = el)}
+                 className={cn(
+                   "flex cursor-pointer items-center justify-between border-b border-neutral-200 px-4 py-3 text-sm last:border-b-0",
+                   i === activeIndex ? "bg-neutral-100" : "hover:bg-neutral-100"
 -- 
 2.43.0
 
