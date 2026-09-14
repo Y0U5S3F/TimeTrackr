@@ -15,13 +15,13 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
   const wrapRef = useRef(null);
 
   useEffect(() => {
-    function onDocClick(e) {
+    function onPointerDown(e) {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) {
         setOpen(false);
       }
     }
-    document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
   }, []);
 
   function handleChange(e) {
@@ -66,9 +66,9 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
 
   return (
     <div className="relative" ref={wrapRef}>
-      <div className="flex items-center gap-3 rounded-[var(--radius)] border border-[var(--hairline)] bg-card px-4 transition-all duration-150 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/40">
+      <div className="flex items-center gap-3 border-b-2 border-[var(--hairline)] bg-white px-4 transition-colors duration-150 focus-within:border-primary">
         <svg
-          className="h-[18px] w-[18px] shrink-0 text-[var(--text-faint)]"
+          className="h-[18px] w-[18px] shrink-0 text-neutral-500"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -86,26 +86,31 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
           autoFocus={autoFocus}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          className="h-auto flex-1 border-0 bg-transparent px-0 py-4 text-base focus-visible:border-0"
+          className="h-auto flex-1 border-0 bg-transparent px-0 py-4 text-base text-neutral-900 placeholder:text-neutral-500 focus-visible:border-0 focus-visible:ring-0"
         />
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-10 overflow-hidden rounded-[var(--radius)] border border-border bg-card">
+        <div className="absolute left-0 right-0 top-[calc(100%+2px)] z-10 overflow-hidden border border-neutral-200 bg-white shadow-lg">
           {results.length === 0 ? (
-            <div className="p-4 text-center text-[13px] text-[var(--text-faint)]">No one matches that name yet</div>
+            <div className="p-4 text-center text-[13px] text-neutral-500">No one matches that name yet</div>
           ) : (
             results.map((emp, i) => (
               <div
                 key={emp.id}
                 className={cn(
-                  "flex cursor-pointer items-center justify-between border-b border-border px-4 py-3 text-sm last:border-b-0",
-                  i === activeIndex ? "bg-[var(--panel-hover)]" : "hover:bg-[var(--panel-hover)]"
+                  "flex cursor-pointer items-center justify-between border-b border-neutral-200 px-4 py-3 text-sm last:border-b-0",
+                  i === activeIndex ? "bg-neutral-100" : "hover:bg-neutral-100"
                 )}
-                onClick={() => select(emp)}
+                onMouseDown={(e) => {
+                  // mousedown (not click) so selecting a result can never be
+                  // pre-empted by the outside-click handler closing the menu first.
+                  e.preventDefault();
+                  select(emp);
+                }}
               >
-                <span className="text-foreground">{emp.name}</span>
-                <span className="text-[11px] uppercase tracking-[0.05em] text-[var(--text-faint)]">{emp.skill || ""}</span>
+                <span className="text-neutral-900">{emp.name}</span>
+                <span className="text-[11px] uppercase tracking-[0.05em] text-neutral-500">{emp.skill || ""}</span>
               </div>
             ))
           )}

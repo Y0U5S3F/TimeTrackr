@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
@@ -11,74 +11,129 @@ const LINKS = [
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navRef = useRef(null);
+
+  // Always close the mobile menu on route change — a stuck-open menu after
+  // navigating is the classic "burger menu is broken" symptom.
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  // Close on outside click. Uses mousedown (fires before click) so it can
+  // never race with — or swallow — a tap on a link inside the menu.
+  useEffect(() => {
+    function onPointerDown(e) {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
+  }, []);
 
   return (
-    <header className="relative z-10 border-b border-border border-t-2 border-t-primary py-4.5">
-      <div className="wrap flex items-baseline justify-between relative">
-        <NavLink
-          to="/"
-          className="font-display font-bold text-xl uppercase tracking-[0.14em] text-foreground no-underline inline-flex items-center gap-2"
-        >
+    <header
+      className="relative z-50 border-b-2 border-b-primary py-0"
+      style={{ background: "var(--topbar)" }}
+    >
+      <div className="wrap-wide flex h-16 items-center justify-between" ref={navRef}>
+        <NavLink to="/" className="inline-flex items-center gap-2 no-underline">
           <span
-            className="inline-block h-[7px] w-[7px] rounded-full bg-primary shadow-[0_0_8px_var(--accent)]"
-            style={{ animation: "dot-pulse 2.2s ease-in-out infinite" }}
-          />
-          ESC_RA Timeline
+            className="inline-flex h-8 items-center bg-[var(--topbar-text)] px-2 font-display text-base font-bold uppercase tracking-[0.1em] text-[var(--topbar)]"
+          >
+            Time
+          </span>
+          <span className="font-display text-base font-bold uppercase tracking-[0.14em]" style={{ color: "var(--topbar-text)" }}>
+            Trackr
+          </span>
         </NavLink>
 
-        <nav
-          className={cn(
-            "flex gap-1 ml-auto mr-3 max-sm:absolute max-sm:top-[calc(100%+1px)] max-sm:left-0 max-sm:right-0",
-            "max-sm:m-0 max-sm:flex-col max-sm:gap-0 max-sm:bg-card max-sm:border-b max-sm:border-border",
-            "max-sm:overflow-hidden max-sm:transition-[max-height,opacity] max-sm:duration-300",
-            open ? "max-sm:max-h-[260px] max-sm:opacity-100" : "max-sm:max-h-0 max-sm:opacity-0"
-          )}
-        >
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-1 sm:flex">
           {LINKS.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               end={l.to === "/"}
-              onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  "glitch-hover relative inline-block px-3.5 py-2 rounded-[var(--radius)] font-mono text-[13px] uppercase tracking-[0.08em] no-underline",
-                  "transition-colors duration-100 hover:bg-primary hover:text-primary-foreground",
-                  "after:content-[''] after:absolute after:left-3.5 after:right-3.5 after:bottom-0 after:h-[3px] after:bg-primary",
-                  "after:origin-left after:transition-transform after:duration-150",
-                  isActive
-                    ? "text-primary after:scale-x-100"
-                    : "text-muted-foreground after:scale-x-0 hover:after:scale-x-0",
-                  "max-sm:px-5 max-sm:py-3.5 max-sm:border-b max-sm:border-border max-sm:rounded-none max-sm:after:hidden"
+                  "inline-flex items-center gap-1.5 px-3.5 py-2 font-mono text-[13px] uppercase tracking-[0.08em] no-underline transition-colors duration-100",
+                  isActive ? "text-primary" : "hover:text-[var(--topbar-text)]"
                 )
               }
+              style={({ isActive }) => ({ color: isActive ? undefined : "var(--topbar-text-dim)" })}
             >
-              {l.label}
+              {({ isActive }) => (
+                <>
+                  <span
+                    className={cn("inline-block h-[7px] w-[7px]", isActive ? "bg-primary" : "bg-transparent")}
+                  />
+                  {l.label}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
 
+        {/* Mobile burger */}
         <button
-          className="hidden max-sm:flex flex-col justify-center gap-[5px] h-8 w-8 bg-transparent border-0 cursor-pointer p-0"
+          type="button"
+          className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] border-0 bg-transparent p-0 sm:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
         >
           <span
             className={cn(
-              "block h-0.5 w-full bg-foreground transition-transform duration-300",
-              open && "translate-y-[7px] rotate-45"
+              "block h-0.5 w-6 transition-transform duration-200",
+              open && "translate-y-[6.5px] rotate-45"
             )}
+            style={{ background: "var(--topbar-text)" }}
           />
-          <span className={cn("block h-0.5 w-full bg-foreground transition-opacity duration-300", open && "opacity-0")} />
+          <span
+            className={cn("block h-0.5 w-6 transition-opacity duration-200", open && "opacity-0")}
+            style={{ background: "var(--topbar-text)" }}
+          />
           <span
             className={cn(
-              "block h-0.5 w-full bg-foreground transition-transform duration-300",
-              open && "-translate-y-[7px] -rotate-45"
+              "block h-0.5 w-6 transition-transform duration-200",
+              open && "-translate-y-[6.5px] -rotate-45"
             )}
+            style={{ background: "var(--topbar-text)" }}
           />
         </button>
       </div>
+
+      {/* Mobile dropdown */}
+      <nav
+        className={cn(
+          "flex flex-col overflow-hidden border-t sm:hidden",
+          open ? "max-h-[280px]" : "max-h-0 border-t-0"
+        )}
+        style={{ background: "var(--topbar)", borderColor: "var(--topbar-hairline)", transition: "max-height 0.25s ease" }}
+      >
+        {LINKS.map((l) => (
+          <NavLink
+            key={l.to}
+            to={l.to}
+            end={l.to === "/"}
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              cn(
+                "wrap-wide flex items-center gap-2 border-b py-3.5 font-mono text-sm uppercase tracking-[0.08em] no-underline",
+                isActive ? "text-primary" : ""
+              )
+            }
+            style={({ isActive }) => ({
+              borderColor: "var(--topbar-hairline)",
+              color: isActive ? undefined : "var(--topbar-text-dim)",
+            })}
+          >
+            {l.label}
+          </NavLink>
+        ))}
+      </nav>
     </header>
   );
 }

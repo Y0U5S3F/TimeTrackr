@@ -95,14 +95,15 @@ export default function Upload() {
 
   return (
     <>
-      <header className="relative z-10 border-b border-border border-t-2 border-t-primary py-4.5">
-        <div className="wrap flex items-baseline justify-between">
-          <Link to="/" className="font-display font-bold text-xl uppercase tracking-[0.14em] text-foreground no-underline inline-flex items-center gap-2">
-            <span
-              className="inline-block h-[7px] w-[7px] rounded-full bg-primary shadow-[0_0_8px_var(--accent)]"
-              style={{ animation: "dot-pulse 2.2s ease-in-out infinite" }}
-            />
-            ESC_RA Timeline
+      <header className="relative z-10 border-b-2 border-b-primary py-0" style={{ background: "var(--topbar)" }}>
+        <div className="wrap-wide flex h-16 items-center justify-between">
+          <Link to="/" className="inline-flex items-center gap-2 no-underline">
+            <span className="inline-flex h-8 items-center bg-[var(--topbar-text)] px-2 font-display text-base font-bold uppercase tracking-[0.1em] text-[var(--topbar)]">
+              Time
+            </span>
+            <span className="font-display text-base font-bold uppercase tracking-[0.14em]" style={{ color: "var(--topbar-text)" }}>
+              Trackr
+            </span>
           </Link>
           <span className="text-xs uppercase tracking-[0.1em] text-primary">Upload</span>
         </div>
