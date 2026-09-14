@@ -13,6 +13,13 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
   const [activeIndex, setActiveIndex] = useState(-1);
   const debounceRef = useRef(null);
   const wrapRef = useRef(null);
+  const itemRefs = useRef([]);
+
+  useEffect(() => {
+    if (activeIndex >= 0) {
+      itemRefs.current[activeIndex]?.scrollIntoView({ block: "nearest" });
+    }
+  }, [activeIndex]);
 
   useEffect(() => {
     function onPointerDown(e) {
@@ -91,13 +98,14 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 top-[calc(100%+2px)] z-10 overflow-hidden border border-neutral-200 bg-white shadow-lg">
+        <div className="absolute left-0 right-0 top-[calc(100%+2px)] z-10 max-h-[320px] overflow-y-auto overscroll-contain border border-neutral-200 bg-white shadow-lg">
           {results.length === 0 ? (
             <div className="p-4 text-center text-[13px] text-neutral-500">No one matches that name yet</div>
           ) : (
             results.map((emp, i) => (
               <div
                 key={emp.id}
+                ref={(el) => (itemRefs.current[i] = el)}
                 className={cn(
                   "flex cursor-pointer items-center justify-between border-b border-neutral-200 px-4 py-3 text-sm last:border-b-0",
                   i === activeIndex ? "bg-neutral-100" : "hover:bg-neutral-100"

@@ -17,12 +17,18 @@ const BAR_COLOR = {
 export default function BoardRows({ days, highlightTodayTomorrow = true, staggerMs = 45 }) {
   if (!days || days.length === 0) return null;
 
+  // Every page passes days oldest-first (that's what the sorting/eligibility
+  // logic on the backend needs), but on screen the newest date should always
+  // be on top — reverse purely for display, once, here, so every list in the
+  // app (Final, Draft, Profile, Swap) shows newest-first consistently.
+  const orderedDays = [...days].reverse();
+
   const todayKey = localDateKey(new Date());
   const tomorrowKey = localDateKey(new Date(Date.now() + 86400000));
 
   return (
     <div className="flex flex-col gap-2">
-      {days.map((day, i) => {
+      {orderedDays.map((day, i) => {
         let barClass = "bar-other";
         let valueContent;
 
