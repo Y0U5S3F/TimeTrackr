@@ -90,7 +90,7 @@ export default function Home() {
         </Button>
 
         <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="m-0 font-display text-[30px] font-semibold tracking-[0.01em] text-foreground">{board.employee.name}</h2>
+          <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>
           <Badge variant="outline">{board.employee.skill || ""}</Badge>
         </div>
 
@@ -105,7 +105,7 @@ export default function Home() {
 
   return (
     <section className="screen" id="screen-home">
-      <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">
+      <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
         Find your shifts.
       </h1>
       <span className="text-xs tracking-[0.05em] text-[var(--text-faint)]">{clock}</span>
@@ -137,23 +137,23 @@ export default function Home() {
 
       <div className="mt-5 flex flex-wrap gap-5 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block h-[9px] w-[9px] rounded-full bg-primary" />
+          <i className="inline-block h-[9px] w-[9px] bg-primary" />
           Working shift
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block h-[9px] w-[9px] rounded-full bg-[var(--slate)]" />
+          <i className="inline-block h-[9px] w-[9px] bg-[var(--slate)]" />
           Day off (R)
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block h-[9px] w-[9px] rounded-full bg-[var(--leave)]" />
+          <i className="inline-block h-[9px] w-[9px] bg-[var(--leave)]" />
           Paid leave (CP)
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block h-[9px] w-[9px] rounded-full bg-[var(--today)]" />
+          <i className="inline-block h-[9px] w-[9px] bg-[var(--today)]" />
           Today
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block h-[9px] w-[9px] rounded-full bg-[var(--tomorrow)]" />
+          <i className="inline-block h-[9px] w-[9px] bg-[var(--tomorrow)]" />
           Tomorrow
         </span>
       </div>

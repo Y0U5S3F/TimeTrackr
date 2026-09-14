@@ -95,22 +95,22 @@ export default function Upload() {
 
   return (
     <>
-      <header className="relative z-10 border-b border-border py-4.5">
+      <header className="relative z-10 border-b border-border border-t-2 border-t-primary py-4.5">
         <div className="wrap flex items-baseline justify-between">
-          <Link to="/" className="font-display font-bold text-xl tracking-[0.14em] text-foreground no-underline inline-flex items-center gap-2">
+          <Link to="/" className="font-display font-bold text-xl uppercase tracking-[0.14em] text-foreground no-underline inline-flex items-center gap-2">
             <span
               className="inline-block h-[7px] w-[7px] rounded-full bg-primary shadow-[0_0_8px_var(--accent)]"
               style={{ animation: "dot-pulse 2.2s ease-in-out infinite" }}
             />
             ESC_RA Timeline
           </Link>
-          <span className="text-xs tracking-[0.05em] text-[var(--text-faint)]">Upload</span>
+          <span className="text-xs uppercase tracking-[0.1em] text-primary">Upload</span>
         </div>
       </header>
 
       <main className="wrap flex-1 relative z-10 pt-16 pb-20 sm:pt-[clamp(64px,16vh,148px)]">
         <section className="screen">
-          <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">
+          <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
             Upload a schedule.
           </h1>
           <p className="mb-8 font-mono text-sm text-muted-foreground">

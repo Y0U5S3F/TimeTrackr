@@ -6,16 +6,16 @@
    from the original site since it matches the approved screens.
    =========================================================== */
 :root {
-  --bg: #0a0c10;
-  --panel: #14171c;
-  --panel-hover: #1b1f26;
-  --hairline: #23272f;
+  --bg: #050505;
+  --panel: #0d0e10;
+  --panel-hover: #16181b;
+  --hairline: #27292d;
   --text: #f5f6f7;
   --text-dim: #8a929e;
   --text-faint: #5b6270;
 
-  --accent: #38bdf8;
-  --accent-dim: #1c4a5e;
+  --accent: #00d2ff;
+  --accent-dim: #0a3a47;
   --slate: #6b7280;
   --leave: #7fa9c9;
   --violet: #9b6bff;
@@ -32,7 +32,7 @@
   --success-bg: rgba(34, 197, 94, 0.1);
   --success-border: rgba(34, 197, 94, 0.3);
 
-  --radius: 6px;
+  --radius: 2px;
   --font-display: "Barlow Condensed", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 
@@ -104,11 +104,34 @@ body {
   overflow-x: hidden;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(0, 210, 255, 0.12) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.5;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(0, 210, 255, 0.025) 1px, transparent 1px) 0 0 / 100% 3px;
+}
+
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .wrap {
@@ -135,6 +158,18 @@ body {
   50% { opacity: .5; transform: scale(1.3); }
 }
 
+@keyframes glitch-jitter {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, 0); }
+  80% { transform: translate(1px, 1px); }
+}
+
+.glitch-hover:hover {
+  animation: glitch-jitter 0.18s steps(2, end) 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .screen, .board-row { animation: none !important; }
+  .screen, .board-row, .glitch-hover:hover { animation: none !important; }
 }

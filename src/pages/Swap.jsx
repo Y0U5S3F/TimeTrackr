@@ -83,7 +83,7 @@ export default function Swap() {
   if (status === "empty" && !localStorage.getItem(STORAGE_KEY)) {
     return (
       <section className="screen" id="screen-empty">
-        <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">
+        <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
           Not logged in.
         </h1>
         <p className="mb-8 font-mono text-sm text-muted-foreground">
@@ -96,7 +96,7 @@ export default function Swap() {
   if (status === "error") {
     return (
       <section className="screen" id="screen-empty">
-        <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">
+        <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
           Error loading swap data.
         </h1>
         <p className="mb-8 font-mono text-sm text-muted-foreground">{errorMsg}</p>
@@ -107,7 +107,7 @@ export default function Swap() {
   if (status === "empty") {
     return (
       <section className="screen" id="screen-empty">
-        <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">
+        <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
           No draft on file.
         </h1>
         <p className="mb-8 font-mono text-sm text-muted-foreground">Upload a draft week first — swaps are computed against it.</p>
@@ -158,7 +158,7 @@ export default function Swap() {
         </Button>
 
         <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="m-0 font-display text-[30px] font-semibold tracking-[0.01em] text-foreground">{emp.name}</h2>
+          <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{emp.name}</h2>
           <Badge variant="outline">{emp.skill || ""}</Badge>
         </div>
 
@@ -204,7 +204,7 @@ export default function Swap() {
 
   return (
     <section className="screen" id="screen-pick">
-      <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">Find a swap.</h1>
+      <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">Find a swap.</h1>
       <p className="mb-2 font-mono text-sm text-muted-foreground">Pick an agent to see who they can trade their whole draft week with.</p>
       <p className="mb-8 text-xs text-[var(--text-faint)]">
         Draft week: {formatDate(first)} – {formatDate(last)}

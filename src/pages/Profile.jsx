@@ -56,7 +56,7 @@ export default function Profile() {
     return (
       <section className="screen" id="screen-board">
         <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="m-0 font-display text-[30px] font-semibold tracking-[0.01em] text-foreground">{board.employee.name}</h2>
+          <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>
           <Badge variant="outline">{board.employee.skill || ""}</Badge>
         </div>
 
@@ -75,7 +75,7 @@ export default function Profile() {
 
   return (
     <section className="screen" id="screen-setup">
-      <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-semibold leading-[1.05] tracking-[0.01em] text-foreground">
+      <h1 className="m-0 mb-2.5 font-display text-[44px] max-[480px]:text-[34px] font-black uppercase leading-[1.02] tracking-tight text-foreground">
         Set up your profile.
       </h1>
       <p className="mb-8 font-mono text-sm text-muted-foreground">

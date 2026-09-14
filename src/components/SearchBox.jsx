@@ -66,7 +66,7 @@ export default function SearchBox({ placeholder, fetchResults, onSelect, autoFoc
 
   return (
     <div className="relative" ref={wrapRef}>
-      <div className="flex items-center gap-3 rounded-[var(--radius)] border border-border bg-card px-4 transition-colors focus-within:border-[var(--accent)]">
+      <div className="flex items-center gap-3 rounded-[var(--radius)] border border-[var(--hairline)] bg-card px-4 transition-all duration-150 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/40">
         <svg
           className="h-[18px] w-[18px] shrink-0 text-[var(--text-faint)]"
           viewBox="0 0 24 24"

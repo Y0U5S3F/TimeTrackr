@@ -13,11 +13,11 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="relative z-10 border-b border-border py-4.5">
+    <header className="relative z-10 border-b border-border border-t-2 border-t-primary py-4.5">
       <div className="wrap flex items-baseline justify-between relative">
         <NavLink
           to="/"
-          className="font-display font-bold text-xl tracking-[0.14em] text-foreground no-underline inline-flex items-center gap-2"
+          className="font-display font-bold text-xl uppercase tracking-[0.14em] text-foreground no-underline inline-flex items-center gap-2"
         >
           <span
             className="inline-block h-[7px] w-[7px] rounded-full bg-primary shadow-[0_0_8px_var(--accent)]"
@@ -42,11 +42,13 @@ export default function Nav() {
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  "relative inline-block px-3.5 py-2 rounded-[var(--radius)] font-mono text-[13px] tracking-[0.02em] no-underline",
-                  "transition-colors duration-200 hover:text-foreground hover:bg-[var(--panel-hover)]",
-                  "after:content-[''] after:absolute after:left-3.5 after:right-3.5 after:bottom-1 after:h-px after:bg-primary",
-                  "after:origin-left after:transition-transform after:duration-200",
-                  isActive ? "text-primary after:scale-x-100" : "text-muted-foreground after:scale-x-0 hover:after:scale-x-100",
+                  "glitch-hover relative inline-block px-3.5 py-2 rounded-[var(--radius)] font-mono text-[13px] uppercase tracking-[0.08em] no-underline",
+                  "transition-colors duration-100 hover:bg-primary hover:text-primary-foreground",
+                  "after:content-[''] after:absolute after:left-3.5 after:right-3.5 after:bottom-0 after:h-[3px] after:bg-primary",
+                  "after:origin-left after:transition-transform after:duration-150",
+                  isActive
+                    ? "text-primary after:scale-x-100"
+                    : "text-muted-foreground after:scale-x-0 hover:after:scale-x-0",
                   "max-sm:px-5 max-sm:py-3.5 max-sm:border-b max-sm:border-border max-sm:rounded-none max-sm:after:hidden"
                 )
               }
@@ -64,14 +66,14 @@ export default function Nav() {
         >
           <span
             className={cn(
-              "block h-0.5 w-full rounded-sm bg-foreground transition-transform duration-300",
+              "block h-0.5 w-full bg-foreground transition-transform duration-300",
               open && "translate-y-[7px] rotate-45"
             )}
           />
-          <span className={cn("block h-0.5 w-full rounded-sm bg-foreground transition-opacity duration-300", open && "opacity-0")} />
+          <span className={cn("block h-0.5 w-full bg-foreground transition-opacity duration-300", open && "opacity-0")} />
           <span
             className={cn(
-              "block h-0.5 w-full rounded-sm bg-foreground transition-transform duration-300",
+              "block h-0.5 w-full bg-foreground transition-transform duration-300",
               open && "-translate-y-[7px] -rotate-45"
             )}
           />
