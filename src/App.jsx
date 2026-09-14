@@ -11,7 +11,7 @@ function StandardLayout({ children }) {
   return (
     <>
       <Nav />
-      <main className="wrap relative z-10 flex-1 pt-10 pb-28 sm:pt-14">{children}</main>
+      <main className="wrap relative z-10 flex-1 pt-10 pb-32 sm:pt-14">{children}</main>
       <Footer />
     </>
   );

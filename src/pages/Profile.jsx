@@ -64,6 +64,20 @@ export default function Profile() {
   if (screen === "board" && board) {
     return (
       <section className="screen" id="screen-board">
+        {/* Final/Draft/Swap all sit a "← Back" link above their heading, which
+            pushes the heading down a bit. Profile has no back link, so this
+            renders an invisible copy of that exact same button (same classes,
+            same text) to reserve the identical space — a fixed pixel guess
+            here previously drifted out of sync with the real button. */}
+        <Button
+          variant="link"
+          tabIndex={-1}
+          aria-hidden="true"
+          className="invisible mb-6 font-mono text-[13px]"
+        >
+          ← Back to search
+        </Button>
+
         <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
           <div className="flex flex-wrap items-baseline gap-2">
             <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{board.employee.name}</h2>

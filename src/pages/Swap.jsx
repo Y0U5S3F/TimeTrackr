@@ -162,43 +162,51 @@ export default function Swap() {
           ← Choose a different agent
         </Button>
 
-        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{emp.name}</h2>
-          <Badge variant="outline">{emp.skill || ""}</Badge>
-        </div>
+        <div className="flex flex-col gap-8 md:flex-row md:items-start">
+          {/* Left: the agent's own week */}
+          <div className="md:w-[340px] md:shrink-0">
+            <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="m-0 font-display text-[30px] font-black uppercase tracking-tight text-foreground">{emp.name}</h2>
+              <Badge variant="outline">{emp.skill || ""}</Badge>
+            </div>
 
-        {emp.excluded && (
-          <p className="mt-6 text-xs text-[var(--text-faint)]">
-            <span className="text-muted-foreground">{emp.excludeReason}</span> — this agent can&rsquo;t swap or be swapped.
-          </p>
-        )}
+            {emp.excluded && (
+              <p className="mb-6 text-xs text-[var(--text-faint)]">
+                <span className="text-muted-foreground">{emp.excludeReason}</span> — this agent can&rsquo;t swap or be swapped.
+              </p>
+            )}
 
-        <BoardRows days={emp.week} highlightTodayTomorrow={false} staggerMs={30} />
-
-        <h3 className="mt-7 mb-1 font-display text-lg font-semibold text-foreground">Can legally swap weeks with</h3>
-        {emp.excluded ? (
-          <p className="py-4 text-[13px] text-[var(--text-faint)]">Not eligible for swaps this week.</p>
-        ) : partnerIds.length === 0 ? (
-          <p className="py-4 text-[13px] text-[var(--text-faint)]">
-            No one else&rsquo;s draft week can be swapped with this agent&rsquo;s without breaking the 7-day or 12h-rest rules.
-          </p>
-        ) : (
-          <div className="mt-4 flex flex-col gap-2">
-            {partnerIds.map((pid) => {
-              const p = byId[pid];
-              return (
-                <div
-                  key={pid}
-                  className="flex cursor-pointer items-center justify-between rounded-[var(--radius)] border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-[var(--accent-dim)] hover:bg-[var(--panel-hover)]"
-                  onClick={() => selectCompare(agentId, pid)}
-                >
-                  <span className="text-foreground">{p.name}</span>
-                  <span className="text-[11px] uppercase tracking-[0.05em] text-[var(--text-faint)]">{p.skill || ""}</span>
-                </div>
-              );
-            })}
+            <BoardRows days={emp.week} highlightTodayTomorrow={false} staggerMs={30} />
           </div>
-        )}
+
+          {/* Right: who they can swap with */}
+          <div className="min-w-0 flex-1">
+            <h3 className="mb-1 font-display text-lg font-semibold text-foreground md:mt-[3px]">Can legally swap weeks with</h3>
+            {emp.excluded ? (
+              <p className="py-4 text-[13px] text-[var(--text-faint)]">Not eligible for swaps this week.</p>
+            ) : partnerIds.length === 0 ? (
+              <p className="py-4 text-[13px] text-[var(--text-faint)]">
+                No one else&rsquo;s draft week can be swapped with this agent&rsquo;s without breaking the 7-day or 12h-rest rules.
+              </p>
+            ) : (
+              <div className="mt-4 flex flex-col gap-2">
+                {partnerIds.map((pid) => {
+                  const p = byId[pid];
+                  return (
+                    <div
+                      key={pid}
+                      className="flex cursor-pointer items-center justify-between rounded-[var(--radius)] border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-[var(--accent-dim)] hover:bg-[var(--panel-hover)]"
+                      onClick={() => selectCompare(agentId, pid)}
+                    >
+                      <span className="text-foreground">{p.name}</span>
+                      <span className="text-[11px] uppercase tracking-[0.05em] text-[var(--text-faint)]">{p.skill || ""}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
       </section>
     );
   }

@@ -21,6 +21,18 @@ const buttonVariants = cva(
         icon: "h-8 w-8",
       },
     },
+    compoundVariants: [
+      // The "link" variant is meant to look and size like plain text, but the
+      // default `size` variant's h-10/px-4/py-2 was being applied after it and
+      // winning the tailwind-merge conflict, so every "link" button (all the
+      // "← Back" links) was silently rendering as a full 40px button box
+      // instead of just its text. Re-assert the compact sizing last so it wins
+      // no matter what `size` is passed (or defaulted to).
+      {
+        variant: "link",
+        class: "h-auto p-0",
+      },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
