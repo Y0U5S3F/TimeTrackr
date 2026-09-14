@@ -1,3 +1,140 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ===========================================================
+   Design tokens — cyan HUD theme (from the TimeTrackr system).
+   Typography (Barlow Condensed / IBM Plex Mono) is unchanged
+   from the original site since it matches the approved screens.
+   =========================================================== */
+:root {
+  --bg: #0a0c10;
+  --panel: #14171c;
+  --panel-hover: #1b1f26;
+  --hairline: #23272f;
+  --text: #f5f6f7;
+  --text-dim: #8a929e;
+  --text-faint: #5b6270;
+
+  --accent: #38bdf8;
+  --accent-dim: #1c4a5e;
+  --slate: #6b7280;
+  --leave: #7fa9c9;
+  --violet: #9b6bff;
+  --green: #22c55e;
+
+  --today: #4e8cff;
+  --today-dim: rgba(78, 140, 255, 0.14);
+  --tomorrow: #9b6bff;
+  --tomorrow-dim: rgba(155, 107, 255, 0.14);
+
+  --destructive-fg: #f0a3a3;
+  --destructive-bg: rgba(217, 96, 96, 0.1);
+  --destructive-border: rgba(217, 96, 96, 0.3);
+  --success-bg: rgba(34, 197, 94, 0.1);
+  --success-border: rgba(34, 197, 94, 0.3);
+
+  --radius: 6px;
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* ---- shadcn/ui semantic tokens, mapped to the tokens above ---- */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--panel);
+  --card-foreground: var(--text);
+  --popover: var(--panel);
+  --popover-foreground: var(--text);
+  --primary: var(--accent);
+  --primary-foreground: #04141c;
+  --secondary: var(--panel-hover);
+  --secondary-foreground: var(--text);
+  --muted: var(--panel);
+  --muted-foreground: var(--text-dim);
+  --accent-bg: var(--panel-hover);
+  --accent-foreground: var(--text);
+  --destructive: #d96060;
+  --destructive-foreground: var(--destructive-fg);
+  --border: var(--hairline);
+  --input: var(--hairline);
+  --ring: var(--accent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent-bg);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: var(--radius);
+  --radius-sm: var(--radius);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.screen { animation: fadeIn 0.25s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flapIn {
+  from { opacity: 0; transform: perspective(400px) rotateX(-18deg); }
+  to { opacity: 1; transform: perspective(400px) rotateX(0deg); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen, .board-row { animation: none !important; }
+}
